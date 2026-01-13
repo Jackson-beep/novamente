@@ -566,7 +566,7 @@ document.getElementById("generateBtn").addEventListener("click", generateCheck);
 function generateCheck() {
   const name = document.getElementById("nameInput").value;
   const date = document.getElementById("dateInput").value;
-document.getElementById("glitchSound")?.play().catch(()=>{});
+
 
   if (!name || !date) {
     alert("Preencha todos os campos.");
@@ -579,7 +579,7 @@ document.getElementById("glitchSound")?.play().catch(()=>{});
 
   // Some com a tela inicial
 const start = document.getElementById("start-screen");
-
+document.getElementById("glitchSound")?.play().catch(()=>{});
 // ativa efeitos
 start.classList.add("shake");
 
@@ -652,3 +652,4 @@ setInterval(() => {
 </body>
 
 </html>
+
