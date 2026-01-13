@@ -369,6 +369,120 @@ color: #dde5da;
   }
 }
 
+  /* ====== GLITCH TRANSITION ====== */
+.glitch-out {
+  animation: glitchOut 0.6s steps(2, end) forwards;
+}
+
+@keyframes glitchOut {
+  0% {
+    transform: scale(1);
+    filter: none;
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+    filter: contrast(200%) brightness(150%);
+  }
+  60% {
+    transform: translateX(-5px);
+    filter: hue-rotate(90deg);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+  /* =========================
+   GLITCH TRANSITION FULL
+========================= */
+
+.glitch-out {
+  animation: glitchOut 0.8s steps(2, end) forwards;
+}
+
+.flash {
+  animation: flashWhite 0.2s ease;
+}
+
+@keyframes flashWhite {
+  0% { background: white; }
+  100% { background: black; }
+}
+
+@keyframes glitchOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: none;
+  }
+
+  10% {
+    transform: translateX(-15px);
+  }
+
+  20% {
+    transform: translateX(15px);
+    filter: contrast(200%) saturate(200%);
+  }
+
+  30% {
+    transform: translateY(-10px);
+  }
+
+  40% {
+    filter: hue-rotate(90deg);
+  }
+
+  50% {
+    transform: translateX(-8px);
+  }
+
+  60% {
+    filter: blur(1px);
+  }
+
+  70% {
+    transform: translateX(8px);
+  }
+
+  80% {
+    filter: none;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+/* Separação RGB estilo defeito de câmera */
+#start-screen.glitch-out {
+  text-shadow:
+    -2px 0 red,
+    2px 0 cyan;
+}
+
+/* Tremida extra */
+.shake {
+  animation: shakeCam 0.15s infinite;
+}
+
+@keyframes shakeCam {
+  0% { transform: translate(0,0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, 2px); }
+  100% { transform: translate(1px, -2px); }
+}
+
 </style>
 </head>
 <body>
@@ -452,6 +566,7 @@ document.getElementById("generateBtn").addEventListener("click", generateCheck);
 function generateCheck() {
   const name = document.getElementById("nameInput").value;
   const date = document.getElementById("dateInput").value;
+document.getElementById("glitchSound")?.play().catch(()=>{});
 
   if (!name || !date) {
     alert("Preencha todos os campos.");
@@ -463,7 +578,24 @@ function generateCheck() {
   document.getElementById("checkDate").textContent = date;
 
   // Some com a tela inicial
-  document.getElementById("start-screen").style.display = "none";
+const start = document.getElementById("start-screen");
+
+// ativa efeitos
+start.classList.add("shake");
+
+setTimeout(() => {
+  start.classList.add("flash");
+}, 150);
+
+setTimeout(() => {
+  start.classList.add("glitch-out");
+}, 250);
+
+setTimeout(() => {
+  start.style.display = "none";
+}, 900);
+
+
 
   // Sons
   document.getElementById("fireworkSound").play();
@@ -512,8 +644,11 @@ setInterval(() => {
 
 <audio id="fireworkSound" src="Jesus Negão (Versão Original)(MP3_160K).mp3"></audio>
 <audio id="partyHorn" src="children-saying-yay-praise-and-worship-jesus-299607.mp3"></audio>
+<audio id="glitchSound" src="glitch.mp3"></audio>
 
+  
 <img id="hallucination" src="IMG_20251207_175819643_HDR~2.jpg">
 
 </body>
+
 </html>
